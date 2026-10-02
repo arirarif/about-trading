@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ট্রেডিং গাইড — বাস্তবতা ও করণীয়</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Tiro+Bangla&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5ef;
+    --surface: #ffffff;
+    --ink: #1b2420;
+    --muted: #5d6b64;
+    --line: #e2ded2;
+    --accent: #0f6b5c;
+    --accent-soft: #e3f1ed;
+    --good: #1f7a4d;
+    --good-soft: #e4f3ea;
+    --warn: #a15c00;
+    --warn-soft: #fbf0db;
+    --bad: #a8322a;
+    --bad-soft: #f9e6e3;
+    --c1: #0f6b5c;
+    --c2: #c7791a;
+    --c3: #b59a2c;
+    --c4: #6a5acd;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121715;
+      --surface: #1a211e;
+      --ink: #e9eeea;
+      --muted: #9aa9a1;
+      --line: #2b3530;
+      --accent: #5cc3ae;
+      --accent-soft: #173029;
+      --good: #6fcf97;
+      --good-soft: #16291f;
+      --warn: #e8b25a;
+      --warn-soft: #2e2413;
+      --bad: #f08a80;
+      --bad-soft: #301a18;
+      --c1: #3fae98;
+      --c2: #e09a3e;
+      --c3: #d3ba4e;
+      --c4: #9d90ee;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Hind Siliguri", "Noto Sans Bengali", "Nirmala UI", sans-serif;
+    font-size: 18px;
+    line-height: 1.75;
+  }
+  .layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); min-height: 100vh; }
+
+  /* Sidebar */
+  nav {
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    padding: 32px 20px; border-right: 1px solid var(--line);
+  }
+  nav .brand { font-family: "Tiro Bangla", serif; font-size: 22px; line-height: 1.3; margin: 0 0 4px; }
+  nav .date { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+  nav a {
+    display: flex; gap: 12px; align-items: baseline;
+    padding: 8px 12px; margin: 2px 0; border-radius: 8px;
+    color: var(--muted); text-decoration: none; font-size: 16px; font-weight: 500;
+  }
+  nav a .n { font-size: 13px; font-weight: 700; color: var(--accent); min-width: 22px; }
+  nav a:hover { background: var(--accent-soft); color: var(--ink); }
+  nav a.active { background: var(--accent-soft); color: var(--ink); font-weight: 600; }
+
+  /* Main */
+  main { padding: 48px 32px 96px; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1, h2 { font-family: "Tiro Bangla", serif; font-weight: 400; line-height: 1.3; text-wrap: balance; }
+  h1 { font-size: 40px; margin: 0 0 12px; }
+  .lede { font-size: 20px; color: var(--muted); margin: 0 0 28px; }
+  section { padding-top: 56px; }
+  section > header { display: flex; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 12px; margin-bottom: 24px; }
+  section > header .num { font-family: "Tiro Bangla", serif; font-size: 20px; color: var(--accent); }
+  h2 { font-size: 30px; margin: 0; }
+  h3 { font-size: 20px; font-weight: 700; margin: 32px 0 8px; }
+  p { margin: 0 0 14px; }
+  ul, ol { margin: 0 0 16px; padding-left: 24px; }
+  li { margin-bottom: 6px; }
+  a { color: var(--accent); }
+  strong { font-weight: 700; }
+  code { font-family: Consolas, monospace; font-size: 0.85em; background: var(--accent-soft); padding: 1px 6px; border-radius: 4px; }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 0 0 20px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .card .k { font-size: 14px; color: var(--muted); font-weight: 600; margin-bottom: 2px; }
+  .card .v { font-size: 17px; font-weight: 600; line-height: 1.5; }
+  .stat .big { font-family: "Tiro Bangla", serif; font-size: 38px; line-height: 1.1; color: var(--bad); margin-bottom: 6px; }
+  .stat p { font-size: 15px; line-height: 1.55; color: var(--muted); margin: 0; }
+
+  /* Callouts */
+  .callout { border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 0 10px 10px 0; padding: 14px 18px; margin: 20px 0; }
+  .callout.warn { border-color: var(--warn); background: var(--warn-soft); }
+  .callout.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .callout.good { border-color: var(--good); background: var(--good-soft); }
+  .callout .t { font-weight: 700; display: block; margin-bottom: 2px; }
+  .callout p:last-child, .callout ul:last-child, .callout ol:last-child { margin-bottom: 0; }
+
+  /* Tables */
+  .tbl { overflow-x: auto; margin: 0 0 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; font-size: 16px; }
+  th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 14px; color: var(--muted); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .tag { display: inline-block; font-size: 14px; font-weight: 600; padding: 1px 10px; border-radius: 999px; white-space: nowrap; }
+  .tag.good { background: var(--good-soft); color: var(--good); }
+  .tag.warn { background: var(--warn-soft); color: var(--warn); }
+  .tag.bad { background: var(--bad-soft); color: var(--bad); }
+
+  /* Allocation bar */
+  .alloc { display: flex; height: 28px; border-radius: 8px; overflow: hidden; gap: 2px; margin: 12px 0 10px; }
+  .alloc span { display: block; }
+  .legend { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 6px 20px; font-size: 16px; margin-bottom: 20px; padding: 0; list-style: none; }
+  .legend li { display: flex; gap: 10px; align-items: baseline; margin: 0; }
+  .legend i { width: 12px; height: 12px; border-radius: 3px; flex: none; transform: translateY(1px); }
+
+  /* Steps */
+  .steps { list-style: none; padding: 0; margin: 0 0 20px; counter-reset: s; }
+  .steps > li { position: relative; padding: 0 0 20px 52px; margin: 0; counter-increment: s; }
+  .steps > li::before {
+    content: counter(s, bengali); position: absolute; left: 0; top: 0;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--accent); color: var(--bg); font-weight: 700; font-size: 16px;
+    display: grid; place-items: center;
+  }
+  .steps > li::after { content: ""; position: absolute; left: 16px; top: 38px; bottom: 2px; width: 2px; background: var(--line); }
+  .steps > li:last-child::after { display: none; }
+  .steps .when { font-size: 14px; color: var(--muted); font-weight: 600; }
+  .steps h4 { margin: 0 0 4px; font-size: 19px; }
+  .steps ul { margin-bottom: 0; }
+
+  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+
+  @media (max-width: 860px) {
+    .layout { display: block; }
+    nav {
+      position: sticky; top: 0; z-index: 5; height: auto; display: flex; gap: 4px;
+      overflow-x: auto; padding: 10px 12px; background: var(--bg);
+      border-right: 0; border-bottom: 1px solid var(--line);
+    }
+    nav .brand, nav .date { display: none; }
+    nav a { white-space: nowrap; margin: 0; font-size: 15px; padding: 6px 10px; }
+    html { scroll-padding-top: 64px; }
+    main { padding: 28px 16px 72px; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 25px; }
+    body { font-size: 17px; }
+  }
+  @media print {
+    nav { display: none; }
+    .layout { display: block; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav id="nav">
+  <p class="brand">ট্রেডিং গাইড</p>
+  <p class="date">২ অক্টোবর ২০২৬</p>
+  <a href="#s1"><span class="n">০১</span>সারসংক্ষেপ</a>
+  <a href="#s2"><span class="n">০২</span>কোন মার্কেট কেমন</a>
+  <a href="#s3"><span class="n">০৩</span>আয়ের বাস্তবতা</a>
+  <a href="#s4"><span class="n">০৪</span>বৈধ ব্রোকার চেনা</a>
+  <a href="#s5"><span class="n">০৫</span>ট্যাক্স ও টাকা পাঠানো</a>
+  <a href="#s6"><span class="n">০৬</span>শেখার রোডম্যাপ</a>
+  <a href="#s7"><span class="n">০৭</span>করণীয়</a>
+  <a href="#s8"><span class="n">০৮</span>বাংলাদেশের আইন</a>
+  <a href="#s9"><span class="n">০৯</span>তথ্যসূত্র</a>
+  <a href="#s10"><span class="n">১০</span>Binance-এ ট্রেডিং</a>
+  <a href="#s11"><span class="n">১১</span>লাভের ভিডিও কেন এত</a>
+</nav>
+
+<main>
+<div class="wrap">
+
+  <h1>ট্রেডিং শুরু করার আগে: বাস্তবতা ও করণীয়</h1>
+  <p class="lede">আন্তর্জাতিক মার্কেট, কোনো একটা দেশে সীমাবদ্ধ নয়। কোনো মিষ্টি কথা নেই।</p>
+
+  <!-- 01 -->
+  <section id="s1">
+    <header><span class="num">০১</span><h2>সারসংক্ষেপ</h2></header>
+
+    <div class="callout">
+      <span class="t">এক কথায়</span>
+      <p>আন্তর্জাতিকভাবে ট্রেডিং একটা বৈধ, নিয়ন্ত্রিত শিল্প। Ponzi নয়। কিন্তু বেশিরভাগ রিটেইল ট্রেডার টাকা হারায়। ফল নির্ভর করে তিনটা জিনিসে: কোন মার্কেট, কোন ব্রোকার, আর কতটা লিভারেজ।</p>
+    </div>
+
+    <div class="cards">
+      <div class="card"><div class="k">স্থিতিশীল, দীর্ঘমেয়াদি পথ</div><div class="v">সারা বিশ্বের স্টকে ছড়ানো গ্লোবাল ETF</div></div>
+      <div class="card"><div class="k">গোল্ড, ফরেক্স, ক্রিপ্টো</div><div class="v">তিনটাই ফটকা মার্কেট। শেখা যায়, কিন্তু মূল সঞ্চয় এখানে নয়।</div></div>
+      <div class="card"><div class="k">এই তিনটার মধ্যে</div><div class="v">গোল্ড ও ফরেক্সে শক্ত নিয়ন্ত্রণের ব্রোকার মেলে। ক্রিপ্টো সবচেয়ে ঝুঁকিপূর্ণ।</div></div>
+      <div class="card"><div class="k">ব্রোকার</div><div class="v">ব্র্যান্ড নয়, কোন দেশের লাইসেন্সে অ্যাকাউন্ট খুলছে সেটা আসল</div></div>
+      <div class="card"><div class="k">লিভারেজ</div><div class="v">নতুনদের টাকা হারানোর এক নম্বর কারণ</div></div>
+      <div class="card"><div class="k">মূল আয়</div><div class="v">ওয়েব ডেভেলপমেন্ট ও SEO। ট্রেডিং তার বিকল্প নয়।</div></div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="s2">
+    <header><span class="num">০২</span><h2>কোন মার্কেট কেমন</h2></header>
+
+    <div class="tbl">
+      <table>
+        <thead><tr><th>মার্কেট</th><th>লাভের উৎস</th><th>ওঠানামা</th><th>নতুনদের জন্য</th></tr></thead>
+        <tbody>
+          <tr><td>গ্লোবাল স্টক ও ETF</td><td>কোম্পানির মুনাফা</td><td>মাঝারি</td><td><span class="tag good">সবচেয়ে ভালো শুরু</span></td></tr>
+          <tr><td>গোল্ড</td><td>শুধু দামের পরিবর্তন</td><td>মাঝারি</td><td><span class="tag good">ছোট অংশে ঠিক আছে</span></td></tr>
+          <tr><td>ফরেক্স</td><td>শুধু দামের পরিবর্তন</td><td>কম, কিন্তু লিভারেজে বিপজ্জনক</td><td><span class="tag warn">কঠিন</span></td></tr>
+          <tr><td>ক্রিপ্টো</td><td>শুধু দামের পরিবর্তন</td><td>খুব বেশি</td><td><span class="tag warn">খুব ছোট অংশ</span></td></tr>
+          <tr><td>ফিউচার্স ও অপশন</td><td>শুধু দামের পরিবর্তন</td><td>লিভারেজে খুব বেশি</td><td><span class="tag bad">পরে</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="t">মূল পার্থক্য</span>
+      <ul>
+        <li><strong>স্টক:</strong> কোম্পানি মুনাফা করে, তাই দীর্ঘমেয়াদে সব বিনিয়োগকারী মিলে লাভ করতে পারে।</li>
+        <li><strong>গোল্ড, ফরেক্স, ক্রিপ্টো:</strong> কোনো মুনাফা তৈরি হয় না। একজনের লাভ মানে আরেকজনের লস, আর ব্রোকার খরচ কাটে।</li>
+      </ul>
+    </div>
+
+    <h3>গ্লোবাল স্টক ও ETF</h3>
+    <ul>
+      <li>এক্সচেঞ্জ সারা বিশ্বে: নিউইয়র্ক, লন্ডন, ফ্রাঙ্কফুর্ট, টোকিও, হংকং।</li>
+      <li>গ্লোবাল ETF মানে এক শেয়ারে কয়েক হাজার কোম্পানি, বহু দেশ (যেমন VWRA)।</li>
+      <li>কোনো এক দেশ বা কোম্পানির ওপর নির্ভরতা থাকে না।</li>
+    </ul>
+
+    <h3>গোল্ড</h3>
+    <ul>
+      <li>আন্তর্জাতিক দাম ঠিক হয় লন্ডন (স্পট) আর COMEX (ফিউচার্স)-এ।</li>
+      <li>কাজ: পোর্টফোলিওতে বৈচিত্র্য, সংকটে সুরক্ষা।</li>
+      <li><strong>বিনিয়োগ হিসেবে:</strong> গোল্ড ETF (যেমন লন্ডনে SGLN, নিউইয়র্কে GLD)। লিভারেজ নেই।</li>
+      <li><strong>ট্রেডিং হিসেবে:</strong> XAUUSD, CFD ব্রোকারে। শক্ত নিয়ন্ত্রণে লিভারেজ সর্বোচ্চ ২০:১।</li>
+    </ul>
+
+    <h3>ফরেক্স (কারেন্সি)</h3>
+    <ul>
+      <li>বিশ্বের সবচেয়ে বড় মার্কেট: দৈনিক $৯.৬ ট্রিলিয়ন (BIS, ২০২৫)।</li>
+      <li>সপ্তাহে ৫ দিন, ২৪ ঘণ্টা খোলা। কোনো কেন্দ্রীয় এক্সচেঞ্জ নেই।</li>
+      <li>প্রতিপক্ষ ব্যাংক আর ফান্ড, যাদের তথ্য ও প্রযুক্তি অনেক এগিয়ে।</li>
+      <li>দাম দিনে ১%-এর কম নড়ে। লাভ-লস বড় হয় লিভারেজের কারণে।</li>
+      <li>শক্ত নিয়ন্ত্রণে লিভারেজ সর্বোচ্চ ৩০:১। অফশোর ব্রোকারে ৫০০:১ বা বেশি।</li>
+    </ul>
+
+    <h3>ক্রিপ্টো</h3>
+    <ul>
+      <li>সপ্তাহে ৭ দিন, ২৪ ঘণ্টা খোলা।</li>
+      <li>বিটকয়েন অতীতে ৭৫–৮৫% পর্যন্ত পড়েছে। বেশিরভাগ ছোট কয়েন শূন্য হয়ে যায়।</li>
+      <li>এক্সচেঞ্জ ডুবে যাওয়ার নজির আছে (FTX, ২০২২)।</li>
+      <li>নিয়ন্ত্রণ দেশভেদে খুব আলাদা, বহু দেশে নিষিদ্ধ।</li>
+      <li>সবচেয়ে পরিষ্কার পথ: স্টক এক্সচেঞ্জে তালিকাভুক্ত স্পট বিটকয়েন ETF/ETP।</li>
+    </ul>
+
+    <h3>ফিউচার্স, অপশন, CFD</h3>
+    <ul>
+      <li>সবগুলো লিভারেজড চুক্তি। আসল সম্পদের মালিক হই না।</li>
+      <li>CFD মানে ব্রোকারের সাথে দামের পার্থক্যের চুক্তি। ব্রোকারই প্রতিপক্ষ।</li>
+      <li>অল্প সময়ে পুরো টাকা হারানো সম্ভব।</li>
+    </ul>
+
+    <div class="callout good">
+      <span class="t">গোল্ড, ফরেক্স না ক্রিপ্টো?</span>
+      <ul>
+        <li>তিনটার কোনোটাই "স্থিতিশীল, দীর্ঘমেয়াদি আয়ের" পথ নয়। সে পথ গ্লোবাল স্টক।</li>
+        <li>ট্রেডিং শিখতে চাইলে একটা বেছে নেওয়া: <strong>গোল্ড (XAUUSD) বা একটা বড় কারেন্সি জোড়া (EUR/USD)</strong>।</li>
+        <li>কারণ: শক্ত নিয়ন্ত্রণের ব্রোকার পাওয়া যায়, খরচ কম, লেনদেন প্রচুর।</li>
+        <li>ক্রিপ্টো ট্রেডিং সবার শেষে।</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="s3">
+    <header><span class="num">০৩</span><h2>আয়ের বাস্তবতা</h2></header>
+
+    <div class="cards">
+      <div class="card stat"><div class="big">৭০–৮০%</div><p>রিটেইল CFD অ্যাকাউন্ট টাকা হারায়। ইউরোপ ও UK-তে ব্রোকারদের আইনত এটা নিজেদের ওয়েবসাইটে লিখতে হয়।</p></div>
+      <div class="card stat"><div class="big">১–৩%</div><p>ডে-ট্রেডার দীর্ঘমেয়াদে ধারাবাহিক লাভ করে। ব্রাজিল ও তাইওয়ানের গবেষণা।</p></div>
+      <div class="card stat"><div class="big">৮৮%</div><p>পেশাদার ফান্ড ১৫ বছরে ইনডেক্সের চেয়ে খারাপ করেছে (SPIVA, US লার্জ-ক্যাপ, মধ্য-২০২৫)।</p></div>
+    </div>
+
+    <h3>বাস্তবসম্মত প্রত্যাশা</h3>
+    <ul>
+      <li>গ্লোবাল স্টকের দীর্ঘমেয়াদি গড় রিটার্ন বছরে প্রায় ৭–১০%।</li>
+      <li>পথটা মসৃণ নয়: ২০০৮-এ গ্লোবাল স্টক প্রায় অর্ধেক হয়েছিল।</li>
+      <li>বছরে ১০–১৫% ধারাবাহিক রিটার্ন মানে অসাধারণ ফল।</li>
+      <li>"মাসে ১০%" মানে বছরে ২০০%-এর বেশি। এটা কেউ ধারাবাহিকভাবে করে না।</li>
+    </ul>
+
+    <div class="callout bad">
+      <span class="t">যাদের থেকে সাবধান</span>
+      <ul>
+        <li><strong>"মাসে ১০–২০% লাভ" বলা লোক।</strong> আয় আসে কোর্স, সিগন্যাল গ্রুপ আর ব্রোকারের রেফারেল কমিশন থেকে।</li>
+        <li><strong>"আমাদের টাকা দিন, আমরা ট্রেড করে দেব।"</strong> এটা মানেই স্ক্যাম। উদাহরণ: MTFE, ২০২৩।</li>
+        <li><strong>গ্যারান্টিড রিটার্ন।</strong> বৈধ কোনো মার্কেটে লাভের গ্যারান্টি নেই।</li>
+        <li><strong>প্রপ ফার্ম চ্যালেঞ্জ।</strong> বেশিরভাগ অংশগ্রহণকারী শুধু চ্যালেঞ্জ ফি হারায়। অনেক ফার্ম হঠাৎ বন্ধও হয়েছে।</li>
+      </ul>
+    </div>
+
+    <p>ট্রেডিং একটা দক্ষতা, শিখতে বছর লাগে, আর শিখেও বেশিরভাগ মানুষ লাভজনক হয় না। ইনভেস্টিং-এ গড় মানুষও লাভ করতে পারে, ট্রেডিং-এ পারে না।</p>
+  </section>
+
+  <!-- 04 -->
+  <section id="s4">
+    <header><span class="num">০৪</span><h2>বৈধ ব্রোকার চেনা</h2></header>
+
+    <h3>নিয়ন্ত্রক সংস্থার স্তর</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>স্তর</th><th>সংস্থা</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag good">শক্ত</span></td><td>FCA (UK), ASIC (অস্ট্রেলিয়া), MAS (সিঙ্গাপুর), FINMA (সুইজারল্যান্ড), BaFin (জার্মানি), SEC/CFTC (USA)</td></tr>
+          <tr><td><span class="tag warn">মাঝারি</span></td><td>CySEC (সাইপ্রাস/EU), DFSA (দুবাই), FSCA (দক্ষিণ আফ্রিকা)</td></tr>
+          <tr><td><span class="tag bad">দুর্বল</span></td><td>Seychelles, Vanuatu, St. Vincent, Belize, Mauritius</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout warn">
+      <span class="t">সবচেয়ে গুরুত্বপূর্ণ কথা: ব্র্যান্ড নয়, entity</span>
+      <ul>
+        <li>একই ব্রোকারের অনেক দেশে আলাদা কোম্পানি (entity) থাকে।</li>
+        <li>ওয়েবসাইটে লেখা থাকে "FCA regulated", কিন্তু দক্ষিণ এশিয়া বা আফ্রিকার গ্রাহককে প্রায়ই রাখা হয় অফশোর entity-তে।</li>
+        <li>অফশোর entity-তে FCA-র কোনো সুরক্ষা প্রযোজ্য নয়।</li>
+        <li>অ্যাকাউন্ট খোলার সময় চুক্তিপত্রে কোম্পানির নাম আর লাইসেন্স নম্বর দেখে নিতে হবে।</li>
+      </ul>
+    </div>
+
+    <h3>শক্ত নিয়ন্ত্রণে যা পাওয়া যায়</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>সুরক্ষা</th><th>শক্ত নিয়ন্ত্রণ</th><th>অফশোর</th></tr></thead>
+        <tbody>
+          <tr><td>গ্রাহকের টাকা আলাদা ব্যাংক হিসাবে</td><td>বাধ্যতামূলক</td><td>নিশ্চয়তা নেই</td></tr>
+          <tr><td>ব্যালেন্স শূন্যের নিচে যাবে না</td><td>বাধ্যতামূলক</td><td>ব্রোকারের ইচ্ছা</td></tr>
+          <tr><td>ব্রোকার ডুবলে ক্ষতিপূরণ</td><td>UK: £৮৫,০০০<br>সাইপ্রাস: €২০,০০০</td><td>নেই</td></tr>
+          <tr><td>লিভারেজের সীমা</td><td>ফরেক্স ৩০:১<br>গোল্ড ২০:১<br>ক্রিপ্টো ২:১</td><td>৫০০:১ বা বেশি</td></tr>
+          <tr><td>ডিপোজিট বোনাস</td><td>নিষিদ্ধ</td><td>প্রচলিত</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>ক্ষতিপূরণ শুধু ব্রোকার ব্যর্থ হলে। ট্রেডে লস হলে নয়।</p>
+
+    <h3>ব্রোকারের ধরন</h3>
+    <ul>
+      <li><strong>স্টক ও ETF (বহু দেশের এক্সচেঞ্জ):</strong> Interactive Brokers, Saxo, Swissquote।</li>
+      <li><strong>ফরেক্স ও গোল্ড CFD:</strong> IG, Pepperstone, OANDA, CMC Markets।</li>
+      <li><strong>ক্রিপ্টো এক্সচেঞ্জ:</strong> Kraken, Coinbase।</li>
+    </ul>
+    <p>কোন দেশের বাসিন্দাকে নেয় এবং কোন entity-তে রাখে, তা ব্রোকারভেদে আলাদা। নিজে যাচাই করতে হবে।</p>
+
+    <h3>লাইসেন্স যাচাই করার জায়গা</h3>
+    <ul>
+      <li>UK: <code>register.fca.org.uk</code></li>
+      <li>অস্ট্রেলিয়া: <code>asic.gov.au</code> (Professional Register)</li>
+      <li>সাইপ্রাস: <code>cysec.gov.cy</code></li>
+      <li>USA: <code>brokercheck.finra.org</code>, <code>nfa.futures.org</code></li>
+    </ul>
+    <p>ব্রোকারের ওয়েবসাইটের লাইসেন্স নম্বর নিয়ন্ত্রকের সাইটে মিলিয়ে দেখা। নকল ওয়েবসাইট (clone firm) প্রচলিত প্রতারণা।</p>
+
+    <div class="callout bad">
+      <span class="t">বিপদের লক্ষণ</span>
+      <ul>
+        <li>ডিপোজিটে বোনাস।</li>
+        <li>৫০০:১ বা বেশি লিভারেজ।</li>
+        <li>শুধু ক্রিপ্টোতে ডিপোজিট নেয়।</li>
+        <li>Telegram বা WhatsApp-এ গ্রাহক খোঁজে।</li>
+        <li>টাকা তুলতে দেরি বা অজুহাত।</li>
+        <li>"অ্যাকাউন্ট ম্যানেজার" ফোন করে বেশি ডিপোজিট করতে বলে।</li>
+      </ul>
+    </div>
+
+    <div class="callout good">
+      <span class="t">অ্যাকাউন্ট খোলার আগে</span>
+      <ol>
+        <li>ডেমো অ্যাকাউন্টে প্ল্যাটফর্ম চালিয়ে দেখা।</li>
+        <li>ছোট অঙ্ক জমা দিয়ে একবার টাকা তুলে দেখা।</li>
+        <li>তারপর বাকি টাকা।</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section id="s5">
+    <header><span class="num">০৫</span><h2>ট্যাক্স ও টাকা পাঠানো</h2></header>
+
+    <div class="callout">
+      <span class="t">মূল নীতি</span>
+      <ul>
+        <li>বেশিরভাগ দেশ তার বাসিন্দার সারা বিশ্বের আয়ে ট্যাক্স নেয়।</li>
+        <li>তাই কোন মার্কেটে ট্রেড করছি তা নয়, কোথায় বসবাস করি সেটাই ঠিক করে কোন আইন খাটবে।</li>
+      </ul>
+    </div>
+
+    <div class="tbl">
+      <table>
+        <thead><tr><th>বিষয়</th><th>নিয়ম</th></tr></thead>
+        <tbody>
+          <tr><td>ট্রেডিং-এর লাভ</td><td>সাধারণত নিজের বসবাসের দেশে ট্যাক্স। ব্রোকার কাটে না; হিসাব রাখা ও রিটার্নে দেখানো নিজের দায়িত্ব।</td></tr>
+          <tr><td>ডিভিডেন্ড</td><td>যে দেশের কোম্পানি, সে দেশ উৎসে কেটে রাখে। UK ০%, USA ৩০% (চুক্তি থাকলে কম), জার্মানি ও সুইজারল্যান্ডে আরও বেশি।</td></tr>
+          <tr><td>হিসাবপত্র</td><td>ব্রোকারের বার্ষিক স্টেটমেন্ট সংরক্ষণ করা।</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout good">
+      <span class="t">সহজ সমাধান: UCITS ETF</span>
+      <ul>
+        <li>আয়ারল্যান্ড বা লুক্সেমবার্গে নিবন্ধিত ফান্ড, ইউরোপের এক্সচেঞ্জে লেনদেন হয়।</li>
+        <li>US-এর বাইরের বিনিয়োগকারীদের জন্য আন্তর্জাতিক মানদণ্ড।</li>
+        <li>"Accumulating" ধরনের ফান্ড ডিভিডেন্ড নিজেই পুনর্বিনিয়োগ করে। আলাদা হিসাব লাগে না।</li>
+        <li>উদাহরণ: VWRA (সারা বিশ্ব), CSPX (S&amp;P 500), SGLN (গোল্ড)।</li>
+      </ul>
+    </div>
+
+    <h3>সরাসরি US সম্পদ কিনলে</h3>
+    <ul>
+      <li>W-8BEN ফর্ম পূরণ করতে হয়।</li>
+      <li>বিদেশির US সম্পদ $৬০,০০০-এর বেশি হলে মৃত্যুর পর ৪০% পর্যন্ত এস্টেট ট্যাক্স।</li>
+      <li>আয়ারল্যান্ড-নিবন্ধিত UCITS ETF এই ট্যাক্সের আওতায় পড়ে না।</li>
+    </ul>
+
+    <div class="callout warn">
+      <span class="t">টাকা পাঠানো ও তোলা</span>
+      <ul>
+        <li>ব্যাংক ট্রান্সফার সবচেয়ে পরিষ্কার পথ। নিজের নামের হিসাব থেকে নিজের নামের ব্রোকার অ্যাকাউন্টে।</li>
+        <li>তৃতীয় পক্ষের মাধ্যমে বা P2P-তে টাকা পাঠানো ঝুঁকিপূর্ণ।</li>
+        <li>অনেক দেশে বিদেশে টাকা পাঠানোর ওপর নিয়ন্ত্রণ (capital control) আছে। বাংলাদেশ তার একটা।</li>
+        <li>বিদেশে বৈধ বসবাস বা কোম্পানি থাকলে হিসাব আলাদা।</li>
+        <li>টাকা নামানোর আগে একজন ট্যাক্স পরামর্শকের সাথে কথা বলা দরকার।</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section id="s6">
+    <header><span class="num">০৬</span><h2>শেখার রোডম্যাপ</h2></header>
+    <p>পেইড কোর্স লাগবে না। সবকিছু ফ্রি বা বইয়ের দামে পাওয়া যায়।</p>
+
+    <ol class="steps">
+      <li>
+        <span class="when">মাস ১</span>
+        <h4>ভিত্তি</h4>
+        <ul>
+          <li>মার্কেট কীভাবে চলে, কে কেনে কে বেচে।</li>
+          <li>অর্ডারের ধরন: market, limit, stop।</li>
+          <li>Bid/ask spread, কমিশন, swap।</li>
+          <li>লিভারেজ ও মার্জিন কীভাবে কাজ করে।</li>
+          <li>ETF, ইনডেক্স, চক্রবৃদ্ধি।</li>
+        </ul>
+      </li>
+      <li>
+        <span class="when">মাস ২ · সবচেয়ে গুরুত্বপূর্ণ</span>
+        <h4>ঝুঁকি ব্যবস্থাপনা</h4>
+        <ul>
+          <li>এক ট্রেডে মূলধনের ১%-এর বেশি ঝুঁকি নয়।</li>
+          <li>স্টপ লস, রিস্ক/রিওয়ার্ড অনুপাত।</li>
+          <li>লসের অঙ্ক: ৫০% হারালে ফিরতে ১০০% লাভ লাগে।</li>
+        </ul>
+      </li>
+      <li>
+        <span class="when">মাস ৩–৪</span>
+        <h4>বিশ্লেষণ</h4>
+        <ul>
+          <li><strong>ফান্ডামেন্টাল:</strong> সুদের হার, মূল্যস্ফীতি, কেন্দ্রীয় ব্যাংকের সিদ্ধান্ত, কোম্পানির আয়।</li>
+          <li><strong>টেকনিক্যাল:</strong> ট্রেন্ড, সাপোর্ট/রেজিস্ট্যান্স, ভলিউম, মুভিং এভারেজ।</li>
+          <li>টেকনিক্যাল বিশ্লেষণ ভবিষ্যদ্বাণী নয়, সিদ্ধান্ত সাজানোর টুল।</li>
+        </ul>
+      </li>
+      <li>
+        <span class="when">মাস ৩–৮</span>
+        <h4>ডেমো ট্রেডিং</h4>
+        <ul>
+          <li>TradingView বা ব্রোকারের ডেমো অ্যাকাউন্টে, আসল টাকা ছাড়া।</li>
+          <li>একটা মার্কেট, একটা স্ট্র্যাটেজি, লিখিত নিয়ম।</li>
+          <li>৫০–১০০টা ট্রেড, প্রতিটার জার্নাল।</li>
+        </ul>
+      </li>
+      <li>
+        <span class="when">মাস ৯ থেকে</span>
+        <h4>ছোট আসল টাকা</h4>
+        <ul><li>ডেমোতে ধারাবাহিক ফল এলে তবেই।</li></ul>
+      </li>
+    </ol>
+
+    <div class="callout">
+      <span class="t">ডেভেলপার হিসেবে বাড়তি সুবিধা</span>
+      <ul>
+        <li>Python দিয়ে স্ট্র্যাটেজি ব্যাকটেস্ট করা যায় (backtrader, vectorbt)।</li>
+        <li>অনুমানের বদলে ডেটা দিয়ে যাচাই।</li>
+        <li>সতর্কতা: অতীতের ডেটায় বেশি মিলিয়ে ফেললে (overfitting) ভবিষ্যতে কাজ করে না।</li>
+      </ul>
+    </div>
+
+    <h3>ফ্রি রিসোর্স ও বই</h3>
+    <ul>
+      <li>Babypips School of Pipsology (ফরেক্স ও গোল্ডের ভিত্তি)</li>
+      <li>Investopedia, Bogleheads wiki</li>
+      <li><em>The Little Book of Common Sense Investing</em> — John Bogle</li>
+      <li><em>A Random Walk Down Wall Street</em> — Burton Malkiel</li>
+      <li><em>Trading in the Zone</em> — Mark Douglas (মনস্তত্ত্ব)</li>
+    </ul>
+  </section>
+
+  <!-- 07 -->
+  <section id="s7">
+    <header><span class="num">০৭</span><h2>করণীয়</h2></header>
+
+    <div class="callout warn">
+      <span class="t">শুরুর আগে</span>
+      <ul>
+        <li>৬ মাসের খরচ জরুরি তহবিলে আলাদা রাখা।</li>
+        <li>শুধু উদ্বৃত্ত টাকা, যা হারালে জীবনে প্রভাব পড়বে না।</li>
+        <li>ঋণের টাকা নয়।</li>
+      </ul>
+    </div>
+
+    <h3>টাকা ভাগ করার উদাহরণ</h3>
+    <div class="alloc" role="img" aria-label="মূল ৮০%, ট্রেডিং অ্যাকাউন্ট ১০%, গোল্ড ৫%, ক্রিপ্টো ৫%">
+      <span style="flex:80;background:var(--c1)"></span>
+      <span style="flex:10;background:var(--c2)"></span>
+      <span style="flex:5;background:var(--c3)"></span>
+      <span style="flex:5;background:var(--c4)"></span>
+    </div>
+    <ul class="legend">
+      <li><i style="background:var(--c1)"></i><span><strong>৮০% মূল:</strong> গ্লোবাল স্টক ETF, ১০+ বছর</span></li>
+      <li><i style="background:var(--c2)"></i><span><strong>১০% ট্রেডিং অ্যাকাউন্ট:</strong> গোল্ড বা ফরেক্স</span></li>
+      <li><i style="background:var(--c3)"></i><span><strong>৫% গোল্ড:</strong> গোল্ড ETF</span></li>
+      <li><i style="background:var(--c4)"></i><span><strong>৫% ক্রিপ্টো:</strong> স্পট বিটকয়েন ETF/ETP (ঐচ্ছিক)</span></li>
+    </ul>
+    <p>এটা উদাহরণ, ব্যক্তিগত পরামর্শ নয়। বয়স ও পরিস্থিতি অনুযায়ী বদলাবে।</p>
+
+    <h3>মূল অংশের নিয়ম</h3>
+    <ul>
+      <li>প্রতি মাসে নির্দিষ্ট অঙ্ক কেনা, দাম যা-ই হোক।</li>
+      <li>মার্কেট পড়লে বিক্রি নয়।</li>
+      <li>বছরে একবার ভাগ ঠিক করা।</li>
+    </ul>
+
+    <h3>ট্রেডিং অ্যাকাউন্টের নিয়ম</h3>
+    <ol>
+      <li>একটাই মার্কেট: গোল্ড (XAUUSD) বা EUR/USD।</li>
+      <li>শক্ত নিয়ন্ত্রণের entity-তে অ্যাকাউন্ট।</li>
+      <li>এক ট্রেডে সর্বোচ্চ ১% ঝুঁকি।</li>
+      <li>কার্যকর লিভারেজ ৫:১-এর নিচে, ব্রোকার যতই দিক।</li>
+      <li>প্রতিটা ট্রেডে স্টপ লস।</li>
+      <li>প্রতিটা ট্রেড জার্নালে লেখা: কেন ঢুকলাম, কেন বেরোলাম।</li>
+      <li>দিনে নির্দিষ্ট লস হলে সেদিন বন্ধ।</li>
+      <li>লসের পর বড় ট্রেড নিয়ে পুষিয়ে নেওয়ার চেষ্টা নয়।</li>
+    </ol>
+
+    <h3>সময়রেখা</h3>
+    <div class="tbl">
+      <table>
+        <tbody>
+          <tr><td><strong>মাস ১–৩</strong></td><td>শুধু শেখা, টাকা ছাড়া।</td></tr>
+          <tr><td><strong>মাস ৩–৮</strong></td><td>ডেমো ট্রেডিং। মূল অংশের মাসিক বিনিয়োগ শুরু করা যায়।</td></tr>
+          <tr><td><strong>মাস ৯–১২</strong></td><td>ট্রেডিং অ্যাকাউন্টে ছোট আসল টাকা।</td></tr>
+          <tr><td><strong>১২ মাস পর</strong></td><td>হিসাব মেলানো।</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="t">১২ মাস পরের পরীক্ষা</span>
+      <p>ট্রেডিং অ্যাকাউন্টের ফল বনাম একই টাকা গ্লোবাল ETF-এ রাখলে যা হতো।</p>
+      <ul>
+        <li><strong>ETF-এর চেয়ে ভালো:</strong> চালিয়ে যাওয়া, ধীরে বাড়ানো।</li>
+        <li><strong>ETF-এর চেয়ে খারাপ:</strong> ট্রেডিং কমানো বা বন্ধ, টাকা ETF-এ।</li>
+      </ul>
+      <p>প্রথম বছরে লস বা সমান-সমান হওয়াই স্বাভাবিক। নিজের দক্ষতা আছে কি না বুঝতে ২–৩ বছর লাগে।</p>
+    </div>
+
+    <div class="callout bad">
+      <span class="t">যা কখনো করব না</span>
+      <ul>
+        <li>কাউকে টাকা দিয়ে "ট্রেড করিয়ে নেওয়া"।</li>
+        <li>সিগন্যাল গ্রুপ বা গ্যারান্টিড রিটার্নে টাকা দেওয়া।</li>
+        <li>দুর্বল নিয়ন্ত্রণের অফশোর ব্রোকার ব্যবহার।</li>
+        <li>ধার করা টাকায় ট্রেড।</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section id="s8">
+    <header><span class="num">০৮</span><h2>বাংলাদেশের আইন (রেফারেন্স)</h2></header>
+    <p>মূল গাইড আন্তর্জাতিক দৃষ্টিকোণে লেখা। এই অংশ শুধু মনে রাখার জন্য, কারণ বাংলাদেশে বসবাস করলে এই আইন প্রযোজ্য থাকে।</p>
+
+    <div class="tbl">
+      <table>
+        <thead><tr><th>মার্কেট</th><th>বাংলাদেশ থেকে</th></tr></thead>
+        <tbody>
+          <tr><td>ফরেক্স (অফশোর ব্রোকার)</td><td><span class="tag bad">অবৈধ</span></td></tr>
+          <tr><td>ক্রিপ্টো</td><td><span class="tag bad">অবৈধ</span></td></tr>
+          <tr><td>XAUUSD (অফশোর ব্রোকার)</td><td><span class="tag bad">অবৈধ</span></td></tr>
+          <tr><td>ফিজিক্যাল সোনা</td><td><span class="tag good">বৈধ</span></td></tr>
+          <tr><td>DSE/CSE শেয়ারবাজার</td><td><span class="tag good">বৈধ</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul>
+      <li><strong>Foreign Exchange Regulation Act 1947:</strong> অনুমতি ছাড়া বিনিয়োগের জন্য বিদেশে টাকা পাঠানো নিষিদ্ধ।</li>
+      <li><strong>মানি লন্ডারিং প্রতিরোধ আইন ২০১২:</strong> ক্রিপ্টো লেনদেনে প্রযোজ্য বলে বাংলাদেশ ব্যাংক জানিয়েছে।</li>
+      <li><strong>বাস্তব ঝুঁকি:</strong> ব্রোকার টাকা আটকে দিলে আইনি প্রতিকার নেই; P2P লেনদেনে ব্যাংক অ্যাকাউন্ট ফ্রিজ হতে পারে।</li>
+    </ul>
+
+    <h3>দেশের ভেতরে বৈধ বিকল্প</h3>
+    <ul>
+      <li>DSE/CSE: দুর্বল মার্কেট (কারসাজি, ২০১০-এর ধস, ফ্লোর প্রাইস)। ঘন ঘন কেনাবেচা নয়, ভালো কোম্পানিতে দীর্ঘমেয়াদি বিনিয়োগ।</li>
+      <li>সঞ্চয়পত্র, ট্রেজারি বিল/বন্ড, FDR।</li>
+      <li>CSE কমোডিটি এক্সচেঞ্জ (গোল্ড ফিউচার্স): আগস্ট ২০২৬ পর্যন্ত অনুমোদনের অপেক্ষায়।</li>
+    </ul>
+  </section>
+
+  <!-- 09 -->
+  <section id="s9">
+    <header><span class="num">০৯</span><h2>তথ্যসূত্র</h2></header>
+    <p>যাচাইয়ের তারিখ: ২ অক্টোবর ২০২৬। নিয়ম বদলাতে পারে, টাকা নামানোর আগে আবার দেখে নিতে হবে।</p>
+
+    <h3>নিয়ন্ত্রণ ও লিভারেজ</h3>
+    <ul>
+      <li><a href="https://www.esma.europa.eu/sites/default/files/library/esma35-43-1000_additional_information_on_the_agreed_product_intervention_measures_relating_to_contracts_for_differences_and_binary_options.pdf">ESMA: CFD-এর ওপর বিধিনিষেধ (মূল নথি)</a></li>
+      <li><a href="https://www.fca.org.uk/publication/policy/ps19-18.pdf">FCA: PS19/18, রিটেইল CFD বিধিনিষেধ</a></li>
+      <li><a href="https://liquidityfinder.com/insight/industry/comparison-of-cfd-retail-broker-leverage-limits-by-regulator">CFD Retail Broker Leverage Limits by Regulator</a></li>
+    </ul>
+
+    <h3>গ্রাহক সুরক্ষা ও ক্ষতিপূরণ</h3>
+    <ul>
+      <li><a href="https://topbrokers.com/all-about-forex-brokers/fca-vs-asic-forex-regulators-compared/">FCA vs ASIC vs CFTC vs CySEC: Forex Regulators Compared</a></li>
+      <li><a href="https://tradingbeasts.com/cysec-vs-fca-key-differences-between-the-two-regulators/">CySEC vs FCA: Key Differences</a></li>
+    </ul>
+
+    <h3>ফরেক্স মার্কেটের আকার</h3>
+    <ul>
+      <li><a href="https://www.bis.org/statistics/rpfx25_fx.htm">BIS: OTC foreign exchange turnover in April 2025</a></li>
+    </ul>
+
+    <h3>ট্যাক্স</h3>
+    <ul>
+      <li><a href="https://www.bogleheads.org/wiki/Nonresident_alien_taxation">Bogleheads: Nonresident alien taxation</a></li>
+      <li><a href="https://www.bogleheads.org/wiki/Nonresident_alien_investors_and_Ireland_domiciled_ETFs">Bogleheads: Ireland domiciled ETFs</a></li>
+      <li><a href="https://www.ssga.com/us/en/institutional/insights/considerations-for-non-us-investors-us-etfs-vs-irish-ucits">State Street: US ETFs vs Irish UCITS ETFs</a></li>
+    </ul>
+
+    <h3>ইনডেক্স বনাম পেশাদার ফান্ড</h3>
+    <ul>
+      <li><a href="https://www.spglobal.com/spdji/en/research-insights/spiva/">SPIVA (S&amp;P Global)</a></li>
+    </ul>
+
+    <h3>বাংলাদেশ</h3>
+    <ul>
+      <li><a href="https://fxnx.com/en/blog/forex-bangladesh-beginner-s-legal-guide-2026">Forex in Bangladesh 2026: The Legal Reality</a></li>
+      <li><a href="https://www.dhakatribune.com/bangladesh/dhaka/402188/young-bangladeshis-turn-to-cryptocurrency-despite">Dhaka Tribune: cryptocurrency despite legal ban</a></li>
+      <li><a href="https://www.thedailystar.net/business/economy/news/cse-fully-ready-launch-commodity-exchange-says-md-4248566">The Daily Star: CSE commodity exchange</a></li>
+    </ul>
+
+    <div class="callout warn">
+      <span class="t">লিংক ছাড়া তথ্য</span>
+      <p>এগুলো ওয়েব সার্চ থেকে নয়, সাধারণ জ্ঞান থেকে লেখা। নিজে যাচাই করা ভালো:</p>
+      <ul>
+        <li>৭০–৮০% CFD অ্যাকাউন্টে লস, ডে-ট্রেডারদের ১–৩% লাভজনক।</li>
+        <li>গ্লোবাল স্টকের গড় রিটার্ন ও ২০০৮-এর পতন।</li>
+        <li>নিয়ন্ত্রক সংস্থার স্তর ভাগ (শক্ত, মাঝারি, দুর্বল) আমার নিজের মূল্যায়ন।</li>
+        <li>কোন ব্রোকার কোন দেশের বাসিন্দা নেয়, তা যাচাই করা হয়নি।</li>
+        <li>দেশভেদে ডিভিডেন্ড ট্যাক্সের হার।</li>
+        <li>MTFE ও FTX-এর ঘটনা।</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <header><span class="num">১০</span><h2>Binance-এ ট্রেডিং</h2></header>
+
+    <div class="callout">
+      <span class="t">এক কথায়</span>
+      <p>Binance-এ "নিরাপদ এবং নিশ্চিত লাভজনক" কোনো পথ নেই। আছে কম ঝুঁকি থেকে বেশি ঝুঁকির একটা সিঁড়ি। লাভের সবচেয়ে বাস্তব সম্ভাবনা সবচেয়ে সাদামাটা পথে: লিভারেজ ছাড়া বিটকয়েন বা ইথেরিয়াম কিনে ধরে রাখা।</p>
+    </div>
+
+    <h3>Binance-এ যা যা করা যায়</h3>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>পথ</th><th>কী</th><th>ঝুঁকি</th></tr></thead>
+        <tbody>
+          <tr><td>Spot কিনে ধরে রাখা</td><td>BTC/ETH কিনে বছর ধরে রাখা</td><td><span class="tag warn">মাঝারি</span></td></tr>
+          <tr><td>Auto-Invest (DCA)</td><td>প্রতি মাসে নির্দিষ্ট অঙ্কে কেনা</td><td><span class="tag warn">মাঝারি</span></td></tr>
+          <tr><td>Simple Earn (stablecoin)</td><td>USDT/USDC জমা রেখে সুদ</td><td><span class="tag warn">কম থেকে মাঝারি</span></td></tr>
+          <tr><td>Spot ট্রেডিং</td><td>নিজে কেনাবেচা, লিভারেজ ছাড়া</td><td><span class="tag bad">বেশি</span></td></tr>
+          <tr><td>Spot Grid বট</td><td>নির্দিষ্ট দামের সীমায় স্বয়ংক্রিয় কেনাবেচা</td><td><span class="tag bad">বেশি</span></td></tr>
+          <tr><td>Dual Investment</td><td>বেশি সুদ, বিনিময়ে দামের ঝুঁকি নেওয়া</td><td><span class="tag bad">বেশি</span></td></tr>
+          <tr><td>Copy Trading</td><td>অন্য ট্রেডারকে অনুসরণ</td><td><span class="tag bad">খুব বেশি</span></td></tr>
+          <tr><td>Margin (১০x পর্যন্ত)</td><td>ধার করা টাকায় ট্রেড</td><td><span class="tag bad">খুব বেশি</span></td></tr>
+          <tr><td>Futures (১২৫x পর্যন্ত)</td><td>লিভারেজড চুক্তি</td><td><span class="tag bad">চরম</span></td></tr>
+          <tr><td>Options</td><td>দামের ওপর বাজির চুক্তি</td><td><span class="tag bad">চরম</span></td></tr>
+          <tr><td>নতুন কয়েন, মিমকয়েন</td><td>নতুন লিস্টিং-এ ফটকা</td><td><span class="tag bad">চরম</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>তুলনামূলক কম ঝুঁকির পথ</h3>
+    <div class="cards">
+      <div class="card">
+        <div class="k">১. BTC/ETH কিনে ধরে রাখা</div>
+        <ul>
+          <li>লিভারেজ নেই, তাই liquidation নেই।</li>
+          <li>তবু দাম ৭৫–৮৫% পর্যন্ত পড়তে পারে। ৪–৫ বছর ধরে রাখার মানসিকতা লাগে।</li>
+          <li>Auto-Invest দিয়ে মাসিক কেনা সবচেয়ে সহজ পদ্ধতি।</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="k">২. Stablecoin-এ Simple Earn</div>
+        <ul>
+          <li>বছরে কয়েক শতাংশ সুদ। বাজার চাঙা থাকলে বেশি।</li>
+          <li>Binance নিজে বিপদে পড়লে টাকা আটকে যেতে পারে।</li>
+          <li>Stablecoin তার ১ ডলার মূল্য হারাতে পারে (UST, ২০২২)।</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout bad">
+      <span class="t">যেগুলো "সহজ আয়" মনে হয় কিন্তু নয়</span>
+      <ul>
+        <li><strong>Futures:</strong> ২০x লিভারেজে দাম ৫% উল্টো গেলেই পুরো টাকা শেষ। ক্রিপ্টো এক দিনেই ৫% নড়ে। গবেষণায় ফিউচার্স ডে-ট্রেডারদের প্রায় সবাই দীর্ঘমেয়াদে লস করেছে।</li>
+        <li><strong>Copy Trading:</strong> লিডারবোর্ডে শুধু সফলদের দেখা যায়। অনেকে বড় ঝুঁকি নিয়ে ভালো ফল দেখায়, তারপর একদিনে সব হারায়।</li>
+        <li><strong>Grid বট:</strong> দাম একটা সীমার মধ্যে ঘুরলে লাভ। দাম এক দিকে চলে গেলে লস।</li>
+        <li><strong>Dual Investment:</strong> এটা আসলে অপশন বিক্রি। দাম উল্টো গেলে লস সুদের চেয়ে অনেক বড়।</li>
+        <li><strong>নতুন কয়েন:</strong> বেশিরভাগ লিস্টিং-এর পর পড়ে যায়।</li>
+      </ul>
+    </div>
+
+    <h3>প্ল্যাটফর্মের ঝুঁকি</h3>
+    <ul>
+      <li>Binance বিশ্বের সবচেয়ে বড় ক্রিপ্টো এক্সচেঞ্জ। জালিয়াতি প্রতিষ্ঠান নয়।</li>
+      <li>কিন্তু ২০২৩-এ মানি লন্ডারিং আইন ভাঙার দায় স্বীকার করে US-এ $৪.৩ বিলিয়ন জরিমানা দিয়েছে।</li>
+      <li>বহু দেশে পূর্ণ লাইসেন্স নেই। ব্যাংকের মতো আমানত সুরক্ষা নেই।</li>
+      <li>এক্সচেঞ্জ ডুবে যাওয়ার নজির আছে (FTX, ২০২২)।</li>
+    </ul>
+
+    <div class="callout good">
+      <span class="t">নিরাপত্তার নিয়ম</span>
+      <ol>
+        <li>2FA চালু (SMS নয়, authenticator অ্যাপ)।</li>
+        <li>Withdrawal whitelist আর anti-phishing code চালু।</li>
+        <li>দীর্ঘমেয়াদি কয়েন নিজের ওয়ালেটে (hardware wallet)।</li>
+        <li>এক্সচেঞ্জে শুধু ততটুকু, যতটুকু ট্রেডে লাগে।</li>
+        <li>"Binance support" পরিচয়ে আসা Telegram/WhatsApp মেসেজ সবই প্রতারণা।</li>
+      </ol>
+    </div>
+
+    <div class="callout warn">
+      <span class="t">P2P নিয়ে সতর্কতা</span>
+      <ul>
+        <li>P2P-তে স্থানীয় মুদ্রায় USDT কেনাবেচা হয়।</li>
+        <li>প্রতারণার সবচেয়ে বড় জায়গা: ভুয়া পেমেন্ট স্ক্রিনশট, চুরির টাকা।</li>
+        <li>চুরির টাকা নিজের হিসাবে এলে ব্যাংক বা মোবাইল ওয়ালেট ফ্রিজ হতে পারে।</li>
+        <li>বাংলাদেশে ক্রিপ্টো লেনদেন অবৈধ (অংশ ০৮ দেখুন)।</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <span class="t">সিদ্ধান্ত</span>
+      <ul>
+        <li>ক্রিপ্টোতে থাকতে চাইলে: মোট সঞ্চয়ের ছোট অংশ (০–৫%), শুধু BTC/ETH, spot, মাসিক কেনা।</li>
+        <li>ট্রেডিং শিখতে চাইলে: শুধু spot, ছোট অঙ্ক, অংশ ০৭-এর নিয়ম।</li>
+        <li>প্রথম বছর Futures, Margin, Options, Copy Trading নয়।</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="s11">
+    <header><span class="num">১১</span><h2>এত মানুষ লাভের ভিডিও বানাচ্ছে কেন</h2></header>
+
+    <div class="callout">
+      <span class="t">এক কথায়</span>
+      <p>সব ভিডিও স্ক্যাম নয়, সব লাভও ভুয়া নয়। মার্কেট আসল, কিছু মানুষ সত্যিই লাভ করে। ভুল হলো এই ধারণা: "এত মানুষ লাভ করছে, তাহলে আমিও করব।" ভিডিওতে যা দেখা যায় তা পুরো ছবির ছোট, বাছাই করা একটা অংশ।</p>
+    </div>
+
+    <h3>একসাথে পাঁচটা জিনিস ঘটছে</h3>
+    <ol class="steps">
+      <li>
+        <h4>যারা হারে তারা ভিডিও বানায় না</h4>
+        <ul>
+          <li>ধরা যাক ১ কোটি মানুষ ট্রেডিং শুরু করল, ২% লাভজনক হলো।</li>
+          <li>তাতেই ২ লাখ সফল মানুষ। হাজার হাজার ভিডিওর জন্য যথেষ্ট।</li>
+          <li>বাকি ৯৮ লাখ চুপচাপ ছেড়ে দেয়। তাদের ভিডিও নেই।</li>
+        </ul>
+      </li>
+      <li>
+        <h4>ভিডিও নির্মাতার আয় ট্রেডিং থেকে নয়</h4>
+        <ul>
+          <li><strong>রেফারেল কমিশন:</strong> তাদের লিংকে অ্যাকাউন্ট খুললে ব্রোকার বা এক্সচেঞ্জ তাদের টাকা দেয়। আমি লাভ করি বা হারি, তারা পায়।</li>
+          <li>কোর্স, সিগন্যাল গ্রুপ, মেন্টরশিপ, YouTube বিজ্ঞাপন।</li>
+          <li>এটা একটা affiliate funnel। ভিডিও হলো কনটেন্ট মার্কেটিং, পণ্য হলো আমার সাইনআপ।</li>
+        </ul>
+      </li>
+      <li>
+        <h4>বাজার যখন ওঠে, সবাই লাভে থাকে</h4>
+        <ul>
+          <li>গোল্ড আর বিটকয়েন গত কয়েক বছরে অনেক বেড়েছে।</li>
+          <li>যে কিনে ধরে রেখেছে সে-ই লাভ করেছে। এটা আসল লাভ।</li>
+          <li>কিন্তু এটা বাজারের দান, দক্ষতার প্রমাণ নয়। বাজার ঘুরলে একই মানুষ হারে।</li>
+        </ul>
+      </li>
+      <li>
+        <h4>লাভ দেখানো সহজ, যাচাই করা কঠিন</h4>
+        <ul>
+          <li>ডেমো অ্যাকাউন্টের স্ক্রিনশট।</li>
+          <li>১০টা ট্রেডের মধ্যে শুধু জেতা ২টা দেখানো।</li>
+          <li>দুই অ্যাকাউন্টে উল্টো দুই ট্রেড, জেতাটা দেখানো।</li>
+          <li>ব্রাউজারের Inspect Element দিয়ে সংখ্যা বদলানো।</li>
+        </ul>
+      </li>
+      <li>
+        <h4>কিছু মানুষ সত্যিই লাভ করে</h4>
+        <ul>
+          <li>ছোট একটা অংশ, বছরের পর বছর পূর্ণকালীন পরিশ্রমে।</li>
+          <li>তারা সাধারণত ভিডিও বানিয়ে "সিক্রেট" বিক্রি করে না।</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>তাহলে টাকাটা যায় কোথায়</h3>
+    <div class="cards">
+      <div class="card"><div class="k">এক্সচেঞ্জ ও ব্রোকার</div><div class="v">প্রতিটা ট্রেডে ফি বা spread, কে জিতল তা নির্বিশেষে</div></div>
+      <div class="card"><div class="k">বড় প্রতিষ্ঠান</div><div class="v">ব্যাংক, ফান্ড, মার্কেট মেকার</div></div>
+      <div class="card"><div class="k">দীর্ঘমেয়াদি বিনিয়োগকারী</div><div class="v">বাজার যখন বাড়ে</div></div>
+      <div class="card"><div class="k">শিক্ষক ও affiliate</div><div class="v">কোর্স আর কমিশন থেকে</div></div>
+    </div>
+    <p>লিভারেজড ট্রেডিং-এ সাধারণ ট্রেডারদের লসই এদের আয়ের বড় অংশ।</p>
+
+    <div class="callout warn">
+      <span class="t">যেকোনো ভিডিও যাচাই করার ৫ প্রশ্ন</span>
+      <ol>
+        <li>বর্ণনায় রেফারেল লিংক আছে?</li>
+        <li>কোর্স, সিগন্যাল বা মেন্টরশিপ বিক্রি করে?</li>
+        <li>অন্তত ১ বছরের যাচাইকৃত রেকর্ড দেখায়, নাকি শুধু স্ক্রিনশট?</li>
+        <li>লসের ট্রেড দেখায়?</li>
+        <li>পদ্ধতিটা এত ভালো কাজ করলে সে সেটা বিক্রি করছে কেন?</li>
+      </ol>
+    </div>
+
+    <div class="callout good">
+      <span class="t">আমার নিজের জন্য এর মানে</span>
+      <ul>
+        <li>ট্রেডিং বন্ধ দরজা নয়। কিন্তু ভিডিওর সংখ্যা সাফল্যের সম্ভাবনার প্রমাণ নয়।</li>
+        <li>নিজে যাচাই করার পথ: ৩–৬ মাস ডেমো ট্রেডিং, প্রতিটা ট্রেডের জার্নাল। তখন ডেটা হবে নিজের।</li>
+        <li>ডেমোতে লাভজনক না হলে আসল টাকায়ও হতো না। হলে ছোট অঙ্কে শুরু।</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>এটা শিক্ষামূলক নোট, ব্যক্তিগত আর্থিক বা আইনি পরামর্শ নয়।</footer>
+
+</div>
+</main>
+</div>
+
+<script>
+  const links = [...document.querySelectorAll('#nav a')];
+  const byId = Object.fromEntries(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      links.forEach(a => a.classList.remove('active'));
+      const a = byId[e.target.id];
+      a.classList.add('active');
+      if (matchMedia('(max-width: 860px)').matches) a.scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  document.querySelectorAll('section').forEach(s => io.observe(s));
+</script>
+</body>
+</html>
